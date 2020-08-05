@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int partition(int a[], int l, int r) {
+    int x = a[r], i = l - 1;
+
+    for (int j = l; j < r; j++) {
+        if (a[j] >= x) swap(a[++i], a[j]);
+    }
+    swap(a[++i], a[r]);
+
+    return i;
+}
+
+void QuickSort(int a[], int l, int r) {
+    if (l >= r) return;
+    int p = partition(a, l, r);
+    QuickSort(a, l, p - 1);
+    QuickSort(a, p + 1, r);
+}
+
+int main() {
+    int coin[1000], m, n, back;
+
+    cout << "Enter number of total coins: ";
+    cin >> n;
+
+    cout << "Enter coins:" << endl;
+    for (int i = 0; i < n; i++) cin >> coin[i];
+
+    QuickSort(coin, 0, n - 1);
+
+    cout << "Change amount: ";
+    cin >> back;
+
+    cout << "Coins Need:" << endl;
+    for (int i = 0; i < n; i++) {
+        if (back >= coin[i]) {
+            m = back / coin[i];
+            cout << coin[i] << " coin " << m << " times" << endl;
+            back = back % coin[i];
+        }
+    }
